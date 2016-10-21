@@ -1,0 +1,43 @@
+= Next
+- Make docker for cc-ng-openapi-server
+  - Tag with version
+- Get push to hcf flow working
+- Get hcf route-registrar working
+  - Ask vlad for endpoint url
+- Get simple/sample conf->json
+  - stp support
+  - Real doc prose
+
+
+
+- Reverse engineer current artifacts into DRY config files
+  - V2
+    - http://apidocs.cloudfoundry.org/241/
+    - https://raw.githubusercontent.com/cloudfoundry-incubator/cf-swagger/master/descriptions/cloudfoundry/cloud_controller/v2/cc-swagger.yml
+  - V3
+    - http://v3-apidocs.cloudfoundry.org/version/3.0.0-alpha.4/index.html
+
+
+- Write a Go endpoint server that can be registered to a CloudFoundry instance
+  - GET v2/openapi
+  - GET v3/openapi
+  - Serve JSON files
+
++ Makefile
+  - build - openapi + server
+  - openapi - make openapi-v*.yaml from:
+    - config/cc-ng-openapi-v*.yaml
+    - cloud_controller_ng clone @tag
+    - stp + schematype section
+  - server - build the Go server
+  X run - run the Go server
+  X register - Register the running server with a CF/CC instance
+  - doc - Use swagger-codegen to generate API docs
+
++ Write ReadMe
+
+
+- Ideas
+  - The server can get the API version from the cc-api-v3.yml file.
+  - The server can call the cc to register itself.
+  - https://github.com/nota-ja/ccng-routes

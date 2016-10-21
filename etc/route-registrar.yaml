@@ -1,0 +1,16 @@
+message_bus_servers:
+- host: nats-int.hcf:4222
+  user: nats
+  password: nats_password
+
+routes:
+- name: openapi
+  port: 8080
+  tags:
+    component: SwaggerAPI
+  uris:
+  - openapi.192.168.77.77.nip.io
+  registration_interval: 10s
+
+# host: 172.20.10.34
+host: <HOSTNAME>

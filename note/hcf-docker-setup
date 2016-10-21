@@ -1,0 +1,6 @@
+vagrant ssh
+docker exec -it cf-usb-int bash
+l /var/vcap/packages/route_registrar/bin/
+l /var/vcap/jobs/route_registrar/config/
+cat /var/vcap/jobs/route_registrar/config/registrar_settings.yml
+cat /var/vcap/jobs/route_registrar/bin/route_registrar_ctl
