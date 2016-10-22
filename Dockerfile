@@ -5,4 +5,4 @@ COPY bin/ /bin/
 COPY etc/ /etc/
 COPY src/ /src/
 WORKDIR /
-ENTRYPOINT "cc-ng-openapi-server.sh"
+ENTRYPOINT "/bin/cc-ng-openapi-server.sh"

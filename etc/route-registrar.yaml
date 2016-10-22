@@ -13,4 +13,3 @@ routes:
   registration_interval: 10s
 
 # host: 172.20.10.34
-host: <HOSTNAME>

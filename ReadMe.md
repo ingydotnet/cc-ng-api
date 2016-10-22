@@ -51,18 +51,20 @@ This repository has a Makefile for automating these basic tasks:
 
   Generate the API docs using `swagger-codegen`.
 
+* `make run`
+* `make test`
+* `make docker-build`
+* `make docker-run`
+* `make docker-shell`
+* `make docker-push`
+
 # Running the CC NG API Server
 
 To start the API server, use the following invocation:
 
 ```
-./cc-ng-openapi-server <CC API URL>
+make run
 ```
-
-When the server starts, it makes a request to the configured CC, and asserts
-that the API version matches the version that the server supports. It then
-registers itself with the CC so that the CC can start supporting the OpenAPI
-endpoints.
 
 ## Testing
 

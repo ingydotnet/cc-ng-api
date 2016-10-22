@@ -1,5 +1,20 @@
 #!/bin/bash
 
-route-registrar -configPath /etc/route-registar.yaml &> /var/log/route-registar.log &
+set -ex
 
-docker run -it --rm --net hcf --entrypoint bash ingy/cc-ng-openapi-server &> /var/log/cc-ng-openapi-server.log  &
+ip_addr="$(
+  ip addr |
+  grep 'inet ' |
+  tail -1 |
+  perl -pe 's/.*?([\d\.]+).*/$1/'
+)"
+echo "host: $ip_addr" >> etc/route-registrar.yaml
+
+route-registrar \
+	-configPath etc/route-registrar.yaml \
+	&> var/log/route-registrar.log &
+
+sleep 1
+
+go run src/cc-ng-openapi-server.go \
+	&> /var/log/cc-ng-openapi-server.log
