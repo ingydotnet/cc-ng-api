@@ -1,0 +1,9 @@
+$ cat `which hcf-setup`
+#!/bin/bash
+set -x
+cf api --skip-ssl-validation https://api.192.168.77.77.nip.io
+cf auth admin changeme
+cf create-org hpe
+cf target -o hpe
+cf create-space myspace
+cf target -o hpe -s myspace

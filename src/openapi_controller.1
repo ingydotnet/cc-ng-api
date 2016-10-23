@@ -1,0 +1,34 @@
+###
+# DO NOT EDIT. This code is generated.
+# See https://github.com/ingydotnet/cc-ng-api
+###
+
+###
+# Add v2 and v3 endpoints to serve the OpenAPI definitions for each API.
+###
+
+# Add the v2 API endpoint.
+module VCAP::CloudController
+  class OpenapiController < RestController::BaseController
+    allow_unauthenticated_access
+    get '/v2/openapi', :read
+    def read
+      $v2_openapi
+    end
+  end
+end
+
+# Add the v3 API endpoint.
+class OpenapiController < ApplicationController
+  def show
+    render status: :ok, json: $v3_openapi
+  end
+end
+Rails.application.routes.draw do
+  get '/openapi', to: 'openapi#show'
+end
+
+#------------------------------------------------------------------------------
+# Static OpenAPI definition for v2.
+#------------------------------------------------------------------------------
+$v2_openapi = <<'...'
