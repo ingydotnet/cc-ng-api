@@ -1,0 +1,70 @@
+#!/usr/bin/env coffee
+
+require '../lib/prelude'
+
+X = '???'
+
+class Main
+  constructor: ->
+    @input_file = process.argv[2]
+    @input = load_yaml_file @input_file
+    @openapi =
+      swagger: '2.0'
+      info:
+        title: X
+        description: X
+        version: X
+        contact:
+          name: 'Cloud Foundry Foundation'
+        license:
+          name: 'Apache 2.0'
+          url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+      basePath: X
+      schemes: ['http']
+      securityDefinitions:
+        basicAuth:
+          type: 'basic'
+          description: 'HTTP Basic Authentication. Works over `HTTP` and `HTTPS`'
+      paths: {}
+      definitions: {}
+
+  main: ->
+    @process_info()
+    @process_paths()
+    @process_definitions()
+
+    write_file '-', YAML.dump(@openapi)
+
+  process_info: ->
+    @info = @openapi.info
+    @info.title = @input.name if @input.name?
+    @info.description = @input.desc if @input.desc?
+    @info.version = @input.vers if @input.vers?
+    @openapi.basePath = @input.base if @input.base?
+
+  process_paths: ->
+    for k, v of @input
+      if k.match /^\//
+        @process_path k, v
+
+  process_path: (path, data)->
+    entry = @openapi.paths[path] = {}
+    for k, v of data
+      endpoint = entry[k] = {}
+      desc = v
+      endpoint.description = desc
+      a = _.filter desc.toLowerCase().split(' '), (s)->
+        not s.match /^(a|an|the|particular)$/
+      a = _.map a, (s)->
+        _.upperFirst s
+      endpoint.operationId = _.lowerFirst a.join ''
+
+  process_definitions: ->
+
+class Walker
+  constructor: ({@node, @callback})->
+
+  walk: (node, callback, path='/')->
+    XXX @
+
+(new Main).main()

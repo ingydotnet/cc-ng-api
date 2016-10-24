@@ -27,9 +27,9 @@ func main() {
 		fmt.Fprint(w, string(dat))
 	})
 
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Println("Running on http://localhost:8080")
 
-	fmt.Print("Running on http://localhost:8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func check(e error) {

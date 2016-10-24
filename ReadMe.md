@@ -7,20 +7,16 @@ Serve OpenAPI definitions for a Cloud Controller NG API
 
 ```
 make build
+make test
 make doc
-./cc-ng-openapi-server https://api.192.168.77.77.nip.io
 ```
 
 # Description
 
-This repo builds a small server that adds 2 endpoints to a Cloud Controller NG:
+This repo builds OpenAPI definitions for the v2 and v3 Cloud Foundry Cloud
+Controller NG APIs, from more succinct SSOT source data files.
 
-* `GET v2/openapi`
-* `GET v3/openapi`
-
-These endpoints return a JSON representation of the OpenAPI/Swagger definitions
-for the v2 and v3 APIs for the Cloud Controller itself. The data from the
-definition payloads can be used to generate many things:
+The OpenAPI definition payloads can be used to generate many things:
 
 * API Documentation
 * Client Code
@@ -30,46 +26,81 @@ definition payloads can be used to generate many things:
 * Console UI Code
 * etc
 
-# Makefile Targets
+This repo generates a single file Ruby controller that adds these endpoints to
+the CC API:
 
-This repository has a Makefile for automating these basic tasks:
+* `GET v2/openapi`
+* `GET v3/openapi`
+
+These endpoints return a JSON representation of the OpenAPI/Swagger
+definitions.
+
+The `Makefile` can inject the Ruby code into a running Helion Cloud Foundry
+setup. See "Makefile" below.
+
+This repo also provides a small Go server (packaged in a Docker container) that
+serves the 2 OpenAPI docs. The server can be registered as an endpoint with a
+Cloud Foundry installation.
+
+# Makefile
+
+This repository has a Makefile for automating all the basic tasks:
 
 * `make build`
 
-  Create the OpenAPI JSON payloads from the config files. Also build the
-  `./cc-ng-openapi-server` program.
+  Create the OpenAPI JSON payloads from the config files.
 
-* `make openapi`
+* `make test`
 
-  Just build the OpenAPI JSON files.
+  Test that the OpenAPI documents match the Cloud Controller NG version for
+  which they are meant to represent.
 
-* `make server`
+* `make run`
 
-  Just build the server.
+  Run the `cc-ng-openapi-server.go` server locally.
 
 * `make doc`
 
-  Generate the API docs using `swagger-codegen`.
+  Generate the API docs from the OpenAPI definitions using `swagger-codegen`.
 
-* `make run`
-* `make test`
-* `make docker-build`
+* `make hcf-injection`
+
+  Inject the OpenAPI Ruby controller into a running HCF.
+
 * `make docker-run`
+
+  Run the `cc-ng-openapi-server` Docker image.
+
+* `make docker-build`
+
+  Build the `cc-ng-openapi-server` Docker image.
+
 * `make docker-shell`
+
+  Build the `cc-ng-openapi-server` Docker image.
+
 * `make docker-push`
 
-# Running the CC NG API Server
+# Setup and Prerequisites
 
-To start the API server, use the following invocation:
+This code was written and tested using an HCF instance running on Vagrant on a
+Mac. The `hcf-injection` and `docker-run` Makefile targets are meant to be run
+from inside a running HCF Vagrant box.
+
+The best thing to do is clone this repo inside your local `hcf` directory. Then
+you can see/edit/make the same files both on your Mac and inside Vagrant.
+
+The `make build` target which generates the `openapi.yaml` files can be run
+from anywhere, but some prerequisites are required. Assuming you are on a Mac,
+run these commands:
 
 ```
-make run
-```
-
-## Testing
-
-To run the API server without a Cloud Foundry CC, do this:
-
-```
-./cc-ng-openapi-server test
+brew update
+brew install swagger-codegen
+brew install node
+npm install -g coffee-script
+npm install -g jyj
+npm install -g schematype
+npm install lodash
+npm install js-yaml
 ```

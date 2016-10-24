@@ -3,173 +3,98 @@
 # then be used to generate documentation and many other things for the
 # cloud_controller_ng.
 
-title: CCv3
-description: |  # Full markdown intro goes here:
+name: Cloud Controller NG v3 API
+desc: |  # Full markdown intro goes here:
   OpenAPI Specification for a Cloud Foundry Cloud Controller NG server v3 API.
-version: 2.61.0
-basePath: /v3
+vers: 2.61.0
+base: /v3
 
 # API routes:
 /apps:
-  get:
-    desc: List all apps
-  post:
-    desc: Create a new app
+  get: List all apps
+  post: Create a new app
 /apps/{guid}:
-  get:
-    desc: Get an app
-    resp: 200
-  put:
-    desc: Update an app
-  patch:
-    desc: Patch an app
-  delete:
-    desc: Destroy an app
+  get: Get an app
+  put: Update an app
+  patch: Patch an app
+  delete: Destroy an app
 /apps/{guid}/start:
-  put:
-    desc: Start an app
+  put: Start an app
 /apps/{guid}/stop:
-  put:
-    desc: Stop an app
+  put: Stop an app
 /apps/{guid}/env:
-  get:
-    desc: Get an app environment
-    resp: 200
+  get: Get an app environment
 /apps/{guid}/droplets/current:
-  put:
-    desc: Set current droplet for app
-  get:
-    desc: Get current droplet
-    resp: 200
+  put: Set current droplet for app
+  get: Get current droplet
 /processes:
-  get:
-    desc: List all processes
-    resp: 200
+  get: List all processes
 /processes/{process_guid}:
-  get:
-    desc: Get a process
-    resp: 200
-  patch:
-    desc: Patch a process
+  get: Get a process
+  patch: Patch a process
 /processes/{process_guid}/instances/{index}:
-  delete:
-    desc: Terminate a process
+  delete: Terminate a process
 /processes/{process_guid}/scale:
-  put:
-    desc: Scale a process
+  put: Scale a process
 /processes/{process_guid}/stats:
-  get:
-    desc: Get process statistics
-    resp: 200
+  get: Get process statistics
 /apps/{app_guid}/processes:
-  get:
-    desc: List all processes for an app
-    resp: 200
+  get: List all processes for an app
 /apps/{app_guid}/processes/{type}:
-  get:
-    desc: Show process for an app
-    resp: 200
+  get: Show process for an app
 /apps/{app_guid}/processes/{type}/scale:
-  put:
-    desc: Update scale for app process
+  put: Update scale for app process
 /apps/{app_guid}/processes/{type}/instances/{index}:
-  delete:
-    desc: Terminate process instance for an app
+  delete: Terminate process instance for an app
 /apps/{app_guid}/processes/{type}/stats:
-  get:
-    desc: Get process statistics for an app
-    resp: 200
+  get: Get process statistics for an app
 /packages:
-  get:
-    desc: List all packages
-    resp: 200
+  get: List all packages
 /packages/{guid}:
-  get:
-    desc: Show a package
-    resp: 200
-  delete:
-    desc: Destroy a package
+  get: Show a package
+  delete: Destroy a package
 /packages/{guid}/upload:
-  post:
-    desc: Upload a package
+  post: Upload a package
 /packages/{guid}/download:
-  get:
-    desc: Download a package
-    resp: 200
+  get: Download a package
 /apps/{app_guid}/packages:
-  get:
-    desc: List all packages for an app
-    resp: 200
-  post:
-    desc: Create a new package for an app
+  get: List all packages for an app
+  post: Create a new package for an app
 /packages/{package_guid}/droplets:
-  post:
-    desc: Create a new droplet for a package
-  get:
-    desc: List droplets for a package
-    resp: 200
+  post: Create a new droplet for a package
+  get: List droplets for a package
 /droplets/{guid}/copy:
-  post:
-    desc: Copy a droplet
+  post: Copy a droplet
 /droplets:
-  get:
-    desc: List all droplets
-    resp: 200
+  get: List all droplets
 /droplets/{guid}:
-  get:
-    desc: Show a droplet
-    resp: 200
-  delete:
-    desc: Destroy a droplet
+  get: Show a droplet
+  delete: Destroy a droplet
 /apps/{app_guid}/droplets:
-  get:
-    desc: List droplets for an app
-    resp: 200
+  get: List droplets for an app
 /route_mappings:
-  post:
-    desc: Create a new route mapping
-  get:
-    desc: List all route mappings
-    resp: 200
+  post: Create a new route mapping
+  get: List all route mappings
 /route_mappings/{route_mapping_guid}:
-  get:
-    desc: Show a route mapping
-    resp: 200
-  delete:
-    desc: Destroy a route mapping
+  get: Show a route mapping
+  delete: Destroy a route mapping
 /apps/{app_guid}/route_mappings:
-  get:
-    desc: List all route mappings for an app
-    resp: 200
+  get: List all route mappings for an app
 /tasks:
-  get:
-    desc: List all tasks
-    resp: 200
+  get: List all tasks
 /tasks/{task_guid}:
-  get:
-    desc: Show a task
-    resp: 200
+  get: Show a task
 /tasks/{task_guid}/cancel:
-  put:
-    desc: Cancel a task
+  put: Cancel a task
 /apps/{app_guid}/tasks:
-  post:
-    desc: Create a new task for an app
-  get:
-    desc: List all tasks for an app
-    resp: 200
+  post: Create a new task for an app
+  get: List all tasks for an app
 /service_bindings:
-  post:
-    desc: Create a new service binding
-  get:
-    desc: List all service bindings
-    resp: 200
+  post: Create a new service binding
+  get: List all service bindings
 /service_bindings/{guid}:
-  get:
-    desc: Show a service binding
-    resp: 200
-  delete:
-    desc: Destroy a service binding
+  get: Show a service binding
+  delete: Destroy a service binding
 
 
 # Response schemtype definitions:
