@@ -24,7 +24,8 @@ test: openapi
 %/openapi.json: %/openapi.yaml
 	jyj $< > $@
 
-%/openapi.yaml: src/cc-ng-openapi-%.yaml %
+#%/openapi.yaml: src/cc-ng-openapi-%.yaml %
+%/openapi.yaml: test/openapi-%.yaml %
 	cp $< $@
 
 v2 v3:

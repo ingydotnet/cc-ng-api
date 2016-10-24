@@ -1,8 +1,8 @@
 = Next
-- Make docker for cc-ng-openapi-server
++ Make docker for cc-ng-openapi-server
   - Tag with version
-- Get push to hcf flow working
-- Get hcf route-registrar working
++ Get push to hcf flow working
++ Get hcf route-registrar working
   - Ask vlad for endpoint url
 - Get simple/sample conf->json
   - stp support

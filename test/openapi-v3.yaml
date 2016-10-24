@@ -1,0 +1,228 @@
+swagger: "2.0"
+info:
+  title: Cloud Controller NG v3 API
+  description: |
+    OpenAPI Specification for a Cloud Foundry Cloud Controller NG server v3 API.
+  version: 2.61.0
+  contact:
+    name: Cloud Foundry Foundation
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v3
+schemes:
+  - http
+paths:
+  /apps:
+    get:
+      description: List all apps
+    post:
+      description: Create a new app
+  /apps/{guid}:
+    get:
+      description: Get an app
+      resp: 200
+    put:
+      description: Update an app
+    patch:
+      description: Patch an app
+    delete:
+      description: Destroy an app
+  /apps/{guid}/start:
+    put:
+      description: Start an app
+  /apps/{guid}/stop:
+    put:
+      description: Stop an app
+  /apps/{guid}/env:
+    get:
+      description: Get an app environment
+      resp: 200
+  /apps/{guid}/droplets/current:
+    put:
+      description: Set current droplet for app
+    get:
+      description: Get current droplet
+      resp: 200
+  /processes:
+    get:
+      description: List all processes
+      resp: 200
+  /processes/{process_guid}:
+    get:
+      description: Get a process
+      resp: 200
+    patch:
+      description: Patch a process
+  /processes/{process_guid}/instances/{index}:
+    delete:
+      description: Terminate a process
+  /processes/{process_guid}/scale:
+    put:
+      description: Scale a process
+  /processes/{process_guid}/stats:
+    get:
+      description: Get process statistics
+      resp: 200
+  /apps/{app_guid}/processes:
+    get:
+      description: List all processes for an app
+      resp: 200
+  /apps/{app_guid}/processes/{type}:
+    get:
+      description: Show process for an app
+      resp: 200
+  /apps/{app_guid}/processes/{type}/scale:
+    put:
+      description: Update scale for app process
+  /apps/{app_guid}/processes/{type}/instances/{index}:
+    delete:
+      description: Terminate process instance for an app
+  /apps/{app_guid}/processes/{type}/stats:
+    get:
+      description: Get process statistics for an app
+      resp: 200
+  /packages:
+    get:
+      description: List all packages
+      resp: 200
+  /packages/{guid}:
+    get:
+      description: Show a package
+      resp: 200
+    delete:
+      description: Destroy a package
+  /packages/{guid}/upload:
+    post:
+      description: Upload a package
+  /packages/{guid}/download:
+    get:
+      description: Download a package
+      resp: 200
+  /apps/{app_guid}/packages:
+    get:
+      description: List all packages for an app
+      resp: 200
+    post:
+      description: Create a new package for an app
+  /packages/{package_guid}/droplets:
+    post:
+      description: Create a new droplet for a package
+    get:
+      description: List droplets for a package
+      resp: 200
+  /droplets/{guid}/copy:
+    post:
+      description: Copy a droplet
+  /droplets:
+    get:
+      description: List all droplets
+      resp: 200
+  /droplets/{guid}:
+    get:
+      description: Show a droplet
+      resp: 200
+    delete:
+      description: Destroy a droplet
+  /apps/{app_guid}/droplets:
+    get:
+      description: List droplets for an app
+      resp: 200
+  /route_mappings:
+    post:
+      description: Create a new route mapping
+    get:
+      description: List all route mappings
+      resp: 200
+  /route_mappings/{route_mapping_guid}:
+    get:
+      description: Show a route mapping
+      resp: 200
+    delete:
+      description: Destroy a route mapping
+  /apps/{app_guid}/route_mappings:
+    get:
+      description: List all route mappings for an app
+      resp: 200
+  /tasks:
+    get:
+      description: List all tasks
+      resp: 200
+  /tasks/{task_guid}:
+    get:
+      description: Show a task
+      resp: 200
+  /tasks/{task_guid}/cancel:
+    put:
+      description: Cancel a task
+  /apps/{app_guid}/tasks:
+    post:
+      description: Create a new task for an app
+    get:
+      description: List all tasks for an app
+      resp: 200
+  /service_bindings:
+    post:
+      description: Create a new service binding
+    get:
+      description: List all service bindings
+      resp: 200
+  /service_bindings/{guid}:
+    get:
+      description: Show a service binding
+      resp: 200
+    delete:
+      description: Destroy a service binding
+definitions:
+  listAppsResponse:
+    xxx: str
+  getAppResponse:
+    xxx: str
+  getAppEnvironmentResponse:
+    xxx: str
+  getCurrentDropletResponse:
+    xxx: str
+  listProcessesResponse:
+    xxx: str
+  getProcessResponse:
+    xxx: str
+  getProcessStatisticsResponse:
+    xxx: str
+  listProcessesForAppResponse:
+    xxx: str
+  showProcessForAppResponse:
+    xxx: str
+  getProcessStatisticsForAppResponse:
+    xxx: str
+  listPackagesResponse:
+    xxx: str
+  showPackageResponse:
+    xxx: str
+  downloadPackageResponse:
+    xxx: str
+  listPackagesForAppResponse:
+    xxx: str
+  listDropletsResponse:
+    xxx: str
+  showDropletResponse:
+    xxx: str
+  listDropletsForAppResponse:
+    xxx: str
+  listDropletsForPackageResponse:
+    xxx: str
+  listRouteMappingsResponse:
+    xxx: str
+  showRouteMappingResponse:
+    xxx: str
+  listRouteMappingsForAppResponse:
+    xxx: str
+  listTasksResponse:
+    xxx: str
+  showTaskResponse:
+    xxx: str
+  listTasksForAppResponse:
+    xxx: str
+  showServiceBindingResponse:
+    xxx: str
+  listServiceBindingsResponse:
+    xxx: str

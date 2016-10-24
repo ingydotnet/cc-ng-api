@@ -1,8 +1,9 @@
 swagger: "2.0"
 info:
+  title: Cloud Controller NG v2 API
   description: |
     This is the specification for a Cloud Foundry Cloud Controller server.
-  version: "2.217.0"
+  version: 2.217.0
   contact:
     name: Cloud Foundry Foundation
   license:
@@ -133,27 +134,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/createsSharedDomainDeprecatedResponse"
-    post:
-      tags: [domainsDeprecated]
-      summary: "creates a domain owned by the given organization (deprecated)"
-      description: "curl --insecure -i %s/v2/domains -X POST -H 'Authorization: %s' -d '%s'"
-      operationId: createsDomainOwnedByGivenOrganizationDeprecated
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: value
-          description: "An object instance that is serialized and sent as the request body."
-          required: true
-          schema:
-            $ref: "#/definitions/createsDomainOwnedByGivenOrganizationDeprecatedRequest"
-      responses:
-        "201":
-          description: successful response
-          schema:
-            $ref: "#/definitions/createsDomainOwnedByGivenOrganizationDeprecatedResponse"
     get:
       tags: [domainsDeprecated]
       summary: "List all Domains (deprecated)"
@@ -382,366 +362,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/listServiceDashboardClientCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Space Update Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listSpaceUpdateEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listSpaceUpdateEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Update Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceUpdateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceUpdateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Plan Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServicePlanDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServicePlanDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Binding Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceBindingCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceBindingCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Broker Update Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceBrokerUpdateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceBrokerUpdateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List User Provided Service Instance Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listUserProvidedServiceInstanceDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listUserProvidedServiceInstanceDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Instance Update Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceInstanceUpdateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceInstanceUpdateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Dashboard Client Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceDashboardClientDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceDashboardClientDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Instance Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceInstanceCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceInstanceCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Broker Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceBrokerCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceBrokerCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Plan Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServicePlanCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServicePlanCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Plan Update Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServicePlanUpdateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServicePlanUpdateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List User Provided Service Instance Update Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listUserProvidedServiceInstanceUpdateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listUserProvidedServiceInstanceUpdateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Plan Visibility Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServicePlanVisibilityDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServicePlanVisibilityDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List User Provided Service Instance Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listUserProvidedServiceInstanceCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listUserProvidedServiceInstanceCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List App Delete Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listAppDeleteEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAppDeleteEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List App Update Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listAppUpdateEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAppUpdateEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List App Create Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listAppCreateEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAppCreateEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List App Exited Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listAppExitedEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAppExitedEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Instance Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceInstanceDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceInstanceDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Plan Visibility Create Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServicePlanVisibilityCreateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServicePlanVisibilityCreateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Space Delete Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listSpaceDeleteEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listSpaceDeleteEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List events associated with an App since January 1, 2014"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listEventsAssociatedWithAppSinceJanuary12014
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listEventsAssociatedWithAppSinceJanuary12014ResponsePaged"
-    get:
-      tags: [events]
-      summary: "List all Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listAllEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAllEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Binding Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceBindingDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceBindingDeleteEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Space Create Events"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listSpaceCreateEvents
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listSpaceCreateEventsResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Plan Visibility Update Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServicePlanVisibilityUpdateEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServicePlanVisibilityUpdateEventsExperimentalResponsePaged"
-    get:
-      tags: [events]
-      summary: "List Service Broker Delete Events (experimental)"
-      description: "curl --insecure -i %s/v2/events -X GET -H 'Authorization: %s' "
-      operationId: listServiceBrokerDeleteEventsExperimental
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listServiceBrokerDeleteEventsExperimentalResponsePaged"
   /events/{guid}:
     get:
       tags: [events]
@@ -1012,60 +632,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/retrieveJobWithUnknownFailureResponse"
-    get:
-      tags: [jobs]
-      summary: "Retrieve Job with known failure"
-      description: "curl --insecure -i %s/v2/jobs/{guid} -X GET -H 'Authorization: %s' "
-      operationId: retrieveJobWithKnownFailure
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: guid
-          description: "The guid parameter is used as a part of the request URL: '/v2/jobs/:guid'"
-          required: true
-          type: string
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/retrieveJobWithKnownFailureResponse"
-    get:
-      tags: [jobs]
-      summary: "Retrieve Job that is queued"
-      description: "curl --insecure -i %s/v2/jobs/{guid} -X GET -H 'Authorization: %s' "
-      operationId: retrieveJobThatIsQueued
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: guid
-          description: "The guid parameter is used as a part of the request URL: '/v2/jobs/:guid'"
-          required: true
-          type: string
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/retrieveJobThatIsQueuedResponse"
-    get:
-      tags: [jobs]
-      summary: "Retrieve Job that was successful"
-      description: "curl --insecure -i %s/v2/jobs/{guid} -X GET -H 'Authorization: %s' "
-      operationId: retrieveJobThatWasSuccessful
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: guid
-          description: "The guid parameter is used as a part of the request URL: '/v2/jobs/:guid'"
-          required: true
-          type: string
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/retrieveJobThatWasSuccessfulResponse"
   /app_usage_events:
     get:
       tags: [appUsageEvents]
@@ -1182,18 +748,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/filterSharedDomainsByNameResponsePaged"
-    get:
-      tags: [sharedDomains]
-      summary: "List all Shared Domains"
-      description: "curl --insecure -i %s/v2/shared_domains -X GET -H 'Authorization: %s' "
-      operationId: listAllSharedDomains
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAllSharedDomainsResponsePaged"
   /resource_match:
     put:
       tags: [resourceMatch]
@@ -1838,30 +1392,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/filterResultSetByProviderDeprecatedResponsePaged"
-    get:
-      tags: [serviceAuthTokensDeprecated]
-      summary: "List all Service Auth Tokens (deprecated)"
-      description: "curl --insecure -i %s/v2/service_auth_tokens -X GET -H 'Authorization: %s' "
-      operationId: listAllServiceAuthTokensDeprecated
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/listAllServiceAuthTokensDeprecatedResponsePaged"
-    get:
-      tags: [serviceAuthTokensDeprecated]
-      summary: "Filtering the result set by label (deprecated)"
-      description: "curl --insecure -i %s/v2/service_auth_tokens -X GET -H 'Authorization: %s' "
-      operationId: filterResultSetByLabelDeprecated
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/filterResultSetByLabelDeprecatedResponsePaged"
   /service_auth_tokens/{guid}:
     delete:
       tags: [serviceAuthTokensDeprecated]
@@ -2190,18 +1720,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/listAllPrivateDomainsResponsePaged"
-    get:
-      tags: [privateDomains]
-      summary: "Filtering Private Domains by name"
-      description: "curl --insecure -i %s/v2/private_domains -X GET -H 'Authorization: %s' "
-      operationId: filterPrivateDomainsByName
-      produces:
-        - application/json
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/filterPrivateDomainsByNameResponsePaged"
     post:
       tags: [privateDomains]
       summary: "Create a Private Domain owned by the given Organization"
@@ -2513,32 +2031,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/retrieveBuildpackResponse"
-    put:
-      tags: [buildpacks]
-      summary: "Change the position of a Buildpack"
-      description: "curl --insecure -i %s/v2/buildpacks/{guid} -X PUT -H 'Authorization: %s' -d '%s'"
-      operationId: changePositionOfBuildpack
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: guid
-          description: "The guid parameter is used as a part of the request URL: '/v2/buildpacks/:guid'"
-          required: true
-          type: string
-        - in: body
-          name: value
-          description: "An object instance that is serialized and sent as the request body."
-          required: true
-          schema:
-            $ref: "#/definitions/changePositionOfBuildpackRequest"
-      responses:
-        "201":
-          description: successful response
-          schema:
-            $ref: "#/definitions/changePositionOfBuildpackResponse"
     delete:
       tags: [buildpacks]
       summary: "Delete a Particular Buildpack"
@@ -2557,32 +2049,6 @@ paths:
       responses:
         "204":
           description: successful response
-    put:
-      tags: [buildpacks]
-      summary: "Lock or unlock a Buildpack"
-      description: "curl --insecure -i %s/v2/buildpacks/{guid} -X PUT -H 'Authorization: %s' -d '%s'"
-      operationId: lockOrUnlockBuildpack
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: guid
-          description: "The guid parameter is used as a part of the request URL: '/v2/buildpacks/:guid'"
-          required: true
-          type: string
-        - in: body
-          name: value
-          description: "An object instance that is serialized and sent as the request body."
-          required: true
-          schema:
-            $ref: "#/definitions/lockOrUnlockBuildpackRequest"
-      responses:
-        "201":
-          description: successful response
-          schema:
-            $ref: "#/definitions/lockOrUnlockBuildpackResponse"
   /buildpacks:
     post:
       tags: [buildpacks]
@@ -2941,33 +2407,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/listAllServiceBindingsForServiceInstanceResponsePaged"
-  /service_plans/{guid}/service_instances:
-    put:
-      tags: [serviceInstances]
-      summary: "Migrate Service Instances from one Service Plan to another Service Plan (experimental)"
-      description: "curl --insecure -i %s/v2/service_plans/{guid}/service_instances -X PUT -H 'Authorization: %s' -d '%s'"
-      operationId: migrateServiceInstancesFromOneServicePlanToAnotherServicePlanExperimental
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: path
-          name: guid
-          description: "The service_plan_guid parameter is used as a part of the request URL: '/v2/service_plans/:service_plan_guid/service_instances'"
-          required: true
-          type: string
-        - in: body
-          name: value
-          description: "An object instance that is serialized and sent as the request body."
-          required: true
-          schema:
-            $ref: "#/definitions/migrateServiceInstancesFromOneServicePlanToAnotherServicePlanExperimentalRequest"
-      responses:
-        "200":
-          description: successful response
-          schema:
-            $ref: "#/definitions/migrateServiceInstancesFromOneServicePlanToAnotherServicePlanExperimentalResponse"
   /apps/{guid}/summary:
     get:
       tags: [apps]
@@ -3071,27 +2510,6 @@ paths:
           description: successful response
           schema:
             $ref: "#/definitions/listAllAppsResponsePaged"
-    post:
-      tags: [apps]
-      summary: "Creating an App"
-      description: "curl --insecure -i %s/v2/apps -X POST -H 'Authorization: %s' -d '%s'"
-      operationId: createApp
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: value
-          description: "An object instance that is serialized and sent as the request body."
-          required: true
-          schema:
-            $ref: "#/definitions/createAppRequest"
-      responses:
-        "201":
-          description: successful response
-          schema:
-            $ref: "#/definitions/createAppResponse"
   /apps/{guid}/routes/{route_guid}:
     put:
       tags: [apps]
