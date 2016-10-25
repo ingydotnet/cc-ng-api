@@ -1,15 +1,33 @@
+define HELP
+
+Makefile targets:
+
+    make build        - Generate v2/openapi.json v3/openapi.json openapi_controller.rb
+    make test         - Test openapi.json files against a cloud_controller_ng
+    make run          - Run the cc-ng-openapi-server.go server locally
+    make doc          - Generate the API docs using swagger-codegen
+
+    make hcf          - Inject openapi_controller.rb into a running HCF
+    make docker-run   - Run Go server inside a running HCF
+    make docker-build - Builf the Docker image for the Go server
+
+    make clean        - Remove generated files
+
+endef
+export HELP
+
 NAME := cc-ng-openapi-server
 DOCKER_USER ?= $(USER)
 DOCKER_NAME := $(DOCKER_USER)/$(NAME)
 HCF_CC_PATH := /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
 
-CC_API_URL ?= https://api.192.168.77.77.nip.io
+#------------------------------------------------------------------------------
+help:
+	@echo "$$HELP"
 
-# TODO Check for node, coffee, stp, etc
+build: v2/openapi.json v3/openapi.json openapi_controller.rb
 
-build: v2/openapi.json v3/openapi.json
-
-test:
+test: check-ccng
 	@echo API test not yet implemented
 
 run: build
@@ -22,7 +40,7 @@ doc: build
 	swagger-codegen generate -i v2/openapi.yaml -l html2 -o doc/v2/
 	swagger-codegen generate -i v3/openapi.yaml -l html2 -o doc/v3/
 
-hcf-injection: check-hcf openapi_controller.rb
+hcf: check-hcf openapi_controller.rb
 	docker cp openapi_controller.rb \
 	    api-int:$(HCF_CC_PATH)/app/controllers/v3/openapi_controller.rb
 	docker exec api-int pkill -f 'ruby.*yml'
@@ -40,10 +58,19 @@ docker-shell:
 docker-push:
 	docker push $(DOCKER_NAME)
 
+clean:
+	rm -fr data doc openapi_controller.rb v2 v3
+
 #------------------------------------------------------------------------------
 check-hcf:
 	@docker ps | grep ' api-int' >/dev/null || \
 	    { echo 'HCF not running here'; exit 1; }
+
+check-ccng:
+	@[ -n "$$CCNG_PATH" ] || \
+	    { echo 'CCNG_PATH variable not set'; exit 1; }
+	@[ -e "$$CCNG_PATH/config/routes.rb" ] || \
+	    { echo "'$$CCNG_PATH' not a cloud_controller_ng repo"; exit 1; }
 
 openapi_controller.rb: build
 	cat src/openapi_controller.1 \
@@ -53,7 +80,10 @@ openapi_controller.rb: build
 	    src/openapi_controller.3 \
 	    > $@
 
-%/openapi.json: %/openapi.yaml
+v2/openapi.json: v2/openapi.yaml
+	jyj $< > $@
+
+v3/openapi.json: v3/openapi.yaml
 	jyj $< > $@
 
 %/openapi.yaml: src/cc-ng-openapi-%.yaml %
@@ -61,6 +91,3 @@ openapi_controller.rb: build
 
 v2 v3:
 	mkdir $@
-
-clean:
-	rm -fr data doc openapi_controller.rb v2 v3

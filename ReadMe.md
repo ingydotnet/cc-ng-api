@@ -6,9 +6,20 @@ Serve OpenAPI definitions for a Cloud Controller NG API
 # Synopsis
 
 ```
+cd ~/hcf
+git clone git@github.com:ingydotnet/cc-ng-openapi
+cd cc-ng-openapi
+make
 make build
-make test
-make doc
+vagrant ssh
+cd hcf/cc-ng-openapi
+make hcf
+make docker run
+exit
+cf curl v2/openapi
+cf curl v3/openapi
+curl -ks https://openapi.192.168.77.77.nip.io/v2/openapi
+curl -ks https://openapi.192.168.77.77.nip.io/v3/openapi
 ```
 
 # Description
@@ -63,7 +74,7 @@ This repository has a Makefile for automating all the basic tasks:
 
   Generate the API docs from the OpenAPI definitions using `swagger-codegen`.
 
-* `make hcf-injection`
+* `make hcf`
 
   Inject the OpenAPI Ruby controller into a running HCF.
 
@@ -84,8 +95,8 @@ This repository has a Makefile for automating all the basic tasks:
 # Setup and Prerequisites
 
 This code was written and tested using an HCF instance running on Vagrant on a
-Mac. The `hcf-injection` and `docker-run` Makefile targets are meant to be run
-from inside a running HCF Vagrant box.
+Mac. The `hcf` and `docker-run` Makefile targets are meant to be run from
+inside a running HCF Vagrant box.
 
 The best thing to do is clone this repo inside your local `hcf` directory. Then
 you can see/edit/make the same files both on your Mac and inside Vagrant.
