@@ -22,7 +22,7 @@ DOCKER_NAME := $(DOCKER_USER)/$(NAME)
 HCF_CC_PATH := /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
 
 ifneq ("$(wildcard ../src/cf-release/src/capi-release)","")
-export CCNG_PATH=../src/cf-release/src/capi-release/src/cloud_controller_ng
+export CCNG_REPO ?= ../src/cf-release/src/capi-release/src/cloud_controller_ng
 endif
 
 #------------------------------------------------------------------------------
@@ -71,10 +71,10 @@ check-hcf:
 	    { echo 'HCF not running here'; exit 1; }
 
 check-ccng:
-	@[ -n "$$CCNG_PATH" ] || \
-	    { echo 'CCNG_PATH variable not set'; exit 1; }
-	@[ -e "$$CCNG_PATH/config/routes.rb" ] || \
-	    { echo "'$$CCNG_PATH' not a cloud_controller_ng repo"; exit 1; }
+	@[ -n "$$CCNG_REPO" ] || \
+	    { echo 'CCNG_REPO variable not set'; exit 1; }
+	@[ -e "$$CCNG_REPO/config/routes.rb" ] || \
+	    { echo "'$$CCNG_REPO' not a cloud_controller_ng repo"; exit 1; }
 
 openapi_controller.rb: build
 	cat src/openapi_controller.1 \

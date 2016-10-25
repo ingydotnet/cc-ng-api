@@ -1,6 +1,6 @@
 #!/bin/bash
 
-in=$CCNG_PATH
+in=$CCNG_REPO
 out=$1
 
 cat $in/lib/cloud_controller/constants.rb |
