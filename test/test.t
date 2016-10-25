@@ -12,8 +12,8 @@ v2j=v2/openapi.json
 v3y=v2/openapi.yaml
 v3j=v2/openapi.json
 yval() { perl -pe 's/.*: //'; }
-yget2() { grep "$1" $v2y | yval; }
-yget3() { grep "$1" $v3y | yval; }
+yget2() { grep "$1" $v2y | head -1 | yval; }
+yget3() { grep "$1" $v3y | head -1 | yval; }
 want() { cat $d/$1; }
 
 #------------------------------------------------------------------------------
