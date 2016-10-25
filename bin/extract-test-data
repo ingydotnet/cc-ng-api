@@ -1,0 +1,8 @@
+#!/bin/bash
+
+in=$CCNG_PATH
+out=$1
+
+cat $in/lib/cloud_controller/constants.rb |
+  grep API_VERSION |
+  perl -pe "s/.*'(.*)'.*/\$1/" > $out/api_version

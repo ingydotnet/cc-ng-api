@@ -6,7 +6,7 @@
 name: Cloud Controller NG v2 API
 desc: |  # Full markdown intro goes here:
   OpenAPI Specification for a Cloud Foundry Cloud Controller NG server v2 API.
-vers: 2.217.0
+vers: 2.61.0
 base: /v2
 
 # API routes:

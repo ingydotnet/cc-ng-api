@@ -21,14 +21,18 @@ DOCKER_USER ?= $(USER)
 DOCKER_NAME := $(DOCKER_USER)/$(NAME)
 HCF_CC_PATH := /var/vcap/packages/cloud_controller_ng/cloud_controller_ng
 
+ifneq ("$(wildcard ../src/cf-release/src/capi-release)","")
+export CCNG_PATH=../src/cf-release/src/capi-release/src/cloud_controller_ng
+endif
+
 #------------------------------------------------------------------------------
 help:
 	@echo "$$HELP"
 
 build: v2/openapi.json v3/openapi.json openapi_controller.rb
 
-test: check-ccng
-	@echo API test not yet implemented
+test: check-ccng build test/data test/test-more-bash
+	prove -lv test/
 
 run: build
 	@echo 'Try: curl http://localhost:8080/v2/openapi'
@@ -59,7 +63,7 @@ docker-push:
 	docker push $(DOCKER_NAME)
 
 clean:
-	rm -fr data doc openapi_controller.rb v2 v3
+	rm -fr data doc openapi_controller.rb test/{data,test-more-bash} v2 v3
 
 #------------------------------------------------------------------------------
 check-hcf:
@@ -89,5 +93,12 @@ v3/openapi.json: v3/openapi.yaml
 %/openapi.yaml: src/cc-ng-openapi-%.yaml %
 	./bin/generate-openapi $< > $@
 
-v2 v3:
+test/data:
 	mkdir $@
+	./bin/extract-test-data $@
+
+test/test-more-bash:
+	git clone https://github.com/ingydotnet/test-more-bash $@
+
+v2 v3:
+	mkdir -p $@
