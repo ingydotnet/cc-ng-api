@@ -19,8 +19,8 @@ run: build
 	go run src/$(NAME).go
 
 doc: build
-	swagger-codegen -i openapi-v2.yaml -l html2 -o doc/v2/
-	swagger-codegen -i openapi-v3.yaml -l html2 -o doc/v3/
+	swagger-codegen generate -i v2/openapi.yaml -l html2 -o doc/v2/
+	swagger-codegen generate -i v3/openapi.yaml -l html2 -o doc/v3/
 
 hcf-injection: check-hcf openapi_controller.rb
 	docker cp openapi_controller.rb \
