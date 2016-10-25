@@ -76,7 +76,7 @@ check-ccng:
 	@[ -e "$$CCNG_REPO/config/routes.rb" ] || \
 	    { echo "'$$CCNG_REPO' not a cloud_controller_ng repo"; exit 1; }
 
-openapi_controller.rb: build
+openapi_controller.rb: v2/openapi.json v3/openapi.json
 	cat src/openapi_controller.1 \
 	    v2/openapi.json \
 	    src/openapi_controller.2 \

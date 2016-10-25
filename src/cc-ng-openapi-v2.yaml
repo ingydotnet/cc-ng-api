@@ -3,13 +3,21 @@
 # then be used to generate documentation and many other things for the
 # cloud_controller_ng.
 
+# This is the OpenAPI 'title':
 name: Cloud Controller NG v2 API
+
+# This becomes the OpenAPI 'description'. It serves as the opening page of the
+# docs and can be a full page of Markdown.
 desc: |  # Full markdown intro goes here:
   OpenAPI Specification for a Cloud Foundry Cloud Controller NG server v2 API.
+
+# This is the CC API 'version'
 vers: 2.61.0
+
+# Becomes 'basePath'
 base: /v2
 
-# API routes:
+# This section (all keys begin with '/') defines all the API route information:
 /stacks/{guid}:
   delete: Delete a Particular Stack
   get: Retrieve a Particular Stack
@@ -366,6 +374,9 @@ base: /v2
 /user_provided_service_instances:
   get: List all User Provided Service Instances
   post: Creating a User Provided Service Instance
+
+# The following section defines all the schema/type information for API
+# requests and responses. The format is SchemaType. See http://schematype.org
 
 +createDockerAppExperimentalRequest:
   name: +str --The name of the app.

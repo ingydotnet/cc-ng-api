@@ -30,9 +30,11 @@ class Main
 
   main: ->
     @process_info()
-    @process_paths()
-    @process_definitions()
-
+    for k, v of @input
+      if k.match /^\//
+        @process_path k, v
+      else if k.match /^\+/
+        @process_definition k, v
     write_file '-', YAML.dump(@openapi)
 
   process_info: ->
@@ -41,11 +43,6 @@ class Main
     @info.description = @input.desc if @input.desc?
     @info.version = @input.vers if @input.vers?
     @openapi.basePath = @input.base if @input.base?
-
-  process_paths: ->
-    for k, v of @input
-      if k.match /^\//
-        @process_path k, v
 
   process_path: (path, data)->
     entry = @openapi.paths[path] = {}
@@ -59,7 +56,41 @@ class Main
         _.upperFirst s
       endpoint.operationId = _.lowerFirst a.join ''
 
-  process_definitions: ->
+  process_definition: (id, data)->
+    id = id[1..]
+    @openapi.definitions[id] =
+      properties: {}
+    props = @openapi.definitions[id].properties
+    for k, v of data
+      if m = v.match /^\+str(?: --(.+))?$/
+        props[k] = type: 'string'
+      else if m = v.match /^\+int(?: --(.+))?$/
+        props[k] = type: 'integer'
+      else if m = v.match /^\+num(?: --(.+))?$/
+        props[k] = type: 'number'
+      else if m = v.match /^\+bool(?: --(.+))?$/
+        props[k] = type: 'boolean'
+      else if m = v.match /^\+(\w+)(?: --(.+))?$/
+        props[k] =
+          '$ref': "#/definitions/#{m[1]}"
+        m = [null, m[2]]
+      else if m = v.match /^\+(\w+)\[\](?: --(.+))?$/
+        props[k] =
+          type: 'array'
+          items:
+            '$ref': "#/definitions/#{m[1]}"
+        m = [null, m[2]]
+      else if k == '...'
+        @openapi.definitions[id] =
+          type: 'object'
+          additionalProperties:
+            type: 'string'
+        m = [null, null]
+      else
+        warn "??? '#{v}'"
+        continue
+      if m[1]?
+        props[k].description = m[1]
 
 class Walker
   constructor: ({@node, @callback})->

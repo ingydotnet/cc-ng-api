@@ -97,7 +97,9 @@ base: /v3
   delete: Destroy a service binding
 
 
-# Response schemtype definitions:
+# The following section defines all the schema/type information for API
+# requests and responses. The format is SchemaType. See http://schematype.org
+
 +listAppsResponse:
   xxx: +str
 +getAppResponse:
