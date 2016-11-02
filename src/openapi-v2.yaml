@@ -479,8 +479,6 @@ stop: [a, an, all, the, particular]
 /user_provided_service_instances/{guid}/routes/{other_id}:
   put:
   delete:
-/user_provided_service_instances/{guid}/service_bindings:
-  get:
 /user_provided_service_instances/{guid}/service_bindings/{other_id}:
   put:
   delete:
