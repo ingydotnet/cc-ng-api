@@ -1,0 +1,29 @@
+#!/bin/bash
+
+set -e
+
+main() {
+  ccng=cloud_controller_ng
+
+  get-v3-routes
+  run-ccng-ruby
+}
+
+get-v3-routes() {
+  perl -n \
+    -e 'next unless /^\s+(get|post|put|patch|delete)\s\x27(.*?)\x27.*?\x27(.*)#(.*)\x27/;' \
+    -e 'print qq{- ["route", "v3", "$1", "$2", "$3", "$4"]\n}' \
+    "$ccng/config/routes.rb"
+}
+
+run-ccng-ruby() {
+  runner=$PWD/bin/extract-ccng-data.rb
+  (
+    cd $ccng
+    bundle exec ruby "$runner"
+  )
+}
+
+die() { echo "$*"; exit 1; }
+
+main "$@"

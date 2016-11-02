@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+set -e
+
+main() {
+  cc=cloud_controller_ng
+
+  [[ -d $cc ]] || clone-cc
+
+  ruby-version
+  apply-patch
+
+  (
+    cd "$cc"
+    git submodule sync
+    git submodule update --init --recursive
+    bundle install --path vendor/bundle
+  )
+}
+
+clone-cc() {
+  [[ -n $CCNG_REPO ]] ||
+    die "'CCNG_REPO' not set"
+  [[ -e $CCNG_REPO/.git ]] ||
+    die "'$CCNG_REPO' doesn't look like a Git repo"
+  [[ -f $CCNG_REPO/config/routes.rb ]] ||
+    die "'$CCNG_REPO' doesn't look like a cloud_controller_ng repo"
+
+  if [[ -f "$CCNG_REPO/.git" ]]; then
+    # Repo is a submodule:
+    git_repo="$(
+      cd "$CCNG_REPO"
+      cd "$(cut -d' ' -f2 .git)"
+      pwd
+    )"
+  else
+    git_repo="$(
+      cd "$CCNG_REPO/.git/"
+      pwd
+    )"
+  fi
+
+  (
+    set +x
+    git clone "$git_repo" "$cc"
+  )
+
+  head=$(cat "$git_repo/HEAD")
+  head="${head#ref: refs/heads/}"
+  [[ -n $head && ! $head =~ : ]] ||
+    die "HEAD value not supported: '$head'"
+
+  (
+    cd "$cc"
+    set -x
+    git checkout "$head"
+  )
+}
+
+ruby-version() {
+  $(type ruby &>/dev/null) ||
+    die "You need to install 'ruby'"
+  ruby_version=$(ruby -e 'puts RUBY_VERSION')
+  [[ $ruby_version =~ ^2\.3 ]] ||
+    die "You need ruby 2.3.x"
+
+  echo "$ruby_version" > $cc/.ruby-version
+}
+
+apply-patch() {
+  patch="$PWD/src/patch/routes.rb.patch"
+  (
+    cd $cc
+    if [[ ! "$(git status)" =~ routes.rb ]]; then
+      (
+        set -x
+        git apply $patch
+      )
+    fi
+  )
+}
+
+die() {
+  echo "$*"
+  exit 1
+}
+
+main "$@"

@@ -1,0 +1,491 @@
+# This file contains all the information to generate a Swagger/OpenAPI
+# definition for the cloud_controller_ng V2 API. The OpenAPI definition can
+# then be used to generate documentation and many other things for the
+# cloud_controller_ng.
+
+# This is the OpenAPI 'title':
+name: Cloud Controller NG v2 API
+
+# This becomes the OpenAPI 'description'. It serves as the opening page of the
+# docs and can be a full page of Markdown.
+desc: |  # Full markdown intro goes here:
+  OpenAPI Specification for a Cloud Foundry Cloud Controller NG server v2 API.
+
+# Stop words to remove from descriptions to make ids:
+stop: [a, an, all, the, particular]
+
+# This section (all keys begin with '/') defines all the API route information:
+/stacks/{guid}:
+  delete: Delete a Particular Stack
+  get: Retrieve a Particular Stack
+/stacks:
+  get: List all Stacks
+  post:
+/service_usage_events/destructively_purge_all_and_reseed_existing_instances:
+  post: Purge and reseed Service Usage Events
+/service_usage_events:
+  get: List Service Usage Events
+/service_usage_events/{guid}:
+  get: Retrieve a Particular Service Usage Event
+/domains:
+  post: creates a shared domain (deprecated)
+  get: List all Domains (deprecated)
+/domains/{guid}:
+  get: Retrieve a Particular Domain (deprecated)
+  put: Update a Particular Domain (deprecated)
+  delete: Delete a Particular Domain (deprecated)
+/domains/{guid}/spaces:
+  get: List all Spaces for the Domain (deprecated)
+/domains/{guid}/spaces/{other_id}:
+  put:
+  delete:
+/apps/{guid}/instances/{instance_id}/files:
+  get:
+/apps/{guid}/instances/{instance_id}/files/{file_path}:
+  get: Retrieve File
+/config/environment_variable_groups/staging:
+  put: Updating the contents of the staging environment variable group
+  get: Getting the contents of the staging environment variable group
+/config/environment_variable_groups/running:
+  get: Getting the contents of the running environment variable group
+  put: Updating the contents of the running environment variable group
+/config/staging_security_groups/{guid}:
+  put: Set a Security Group as a default for staging
+  delete: Removing a Security Group as a default for staging
+/config/staging_security_groups:
+  get: Return the Security Groups used for staging
+/events:
+  get: List Service Dashboard Client Create Events (experimental)
+  post:
+/events/{guid}:
+  get: Retrieve a Particular Event
+  put:
+  delete:
+/info:
+  get: Get Info
+/config/running_security_groups/{guid}:
+  put: Set a Security Group as a default for running Apps
+  delete: Removing a Security Group as a default for running Apps
+/config/running_security_groups:
+  get: Return the Security Groups used for running Apps
+/space_quota_definitions/{guid}/spaces:
+  get: List all Spaces for the Space Quota Definition
+/space_quota_definitions/{guid}/spaces/{other_id}:
+  delete: Remove Space from the Space Quota Definition
+  put: Associate Space with the Space Quota Definition
+/space_quota_definitions:
+  post: Creating a Space Quota Definition
+  get: List all Space Quota Definitions
+/space_quota_definitions/{guid}:
+  get: Retrieve a Particular Space Quota Definition
+  delete: Delete a Particular Space Quota Definition
+  put: Updating a Space Quota Definition
+/jobs/{guid}:
+  get: Retrieve Job with unknown failure
+/app_events:
+  get:
+  post:
+/app_events/{guid}:
+  get:
+  put:
+  delete:
+/app_usage_events:
+  get: List all App Usage Events
+/app_usage_events/destructively_purge_all_and_reseed_started_apps:
+  post: Purge and reseed App Usage Events
+/app_usage_events/{guid}:
+  get: Retrieve a Particular App Usage Event
+/shared_domains/{guid}:
+  get: Retrieve a Particular Shared Domain
+  put:
+  delete: Delete a Particular Shared Domain
+/shared_domains:
+  post: Create a Shared Domain
+  get: Filtering Shared Domains by name
+/resource_match:
+  put: List all matching resources
+/organizations/{guid}/spaces:
+  get: List all Spaces for the Organization
+/organizations/{guid}/spaces/{other_id}:
+  put:
+  delete:
+/organizations/{guid}/managers:
+  get: List all Managers for the Organization
+  put:
+  delete:
+/organizations/{guid}/services:
+  get: List all Services for the Organization
+/organizations/{guid}/domains:
+  get: List all Domains for the Organization (deprecated)
+/organizations/{guid}/domains/{domain_guid}:
+  delete:
+/organizations/{guid}/domains/{other_id}:
+  delete:
+/organizations/{guid}:
+  delete: Delete a Particular Organization
+  put: Update an Organization
+  get: Retrieve a Particular Organization
+/organizations/{guid}/space_quota_definitions:
+  get: List all Space Quota Definitions for the Organization
+/organizations/{guid}/space_quota_definitions/{other_id}:
+  put:
+  delete:
+/organizations/{guid}/private_domains:
+  get: List all Private Domains for the Organization
+/organizations/{guid}/private_domains/{domain_guid}:
+  put:
+/organizations/{guid}/private_domains/{other_id}:
+  put:
+  delete:
+/organizations/{guid}/managers/{other_id}:
+  put: Associate Manager with the Organization
+  delete: Remove Manager from the Organization
+/organizations/{guid}/users:
+  get: List all Users for the Organization
+  put:
+  delete:
+/organizations/{guid}/user_roles:
+  get:
+/organizations/{guid}/memory_usage:
+  get: Retrieving organization memory usage
+/organizations/{guid}/billing_managers/{other_id}:
+  put: Associate Billing Manager with the Organization
+  delete: Remove Billing Manager from the Organization
+/organizations/{guid}/auditors/{other_id}:
+  put: Associate Auditor with the Organization
+  delete: Remove Auditor from the Organization
+/organizations/{guid}/billing_managers:
+  get: List all Billing Managers for the Organization
+  put:
+  delete:
+/organizations/{guid}/auditors:
+  get: List all Auditors for the Organization
+  put:
+  delete:
+/organizations:
+  get: List all Organizations
+  post: Creating an Organization
+/organizations/{guid}/summary:
+  get: Get Organization summary
+/organizations/{guid}/users/{other_id}:
+  put: Associate User with the Organization
+  delete: Remove User from the Organization
+/organizations/{guid}/app_events:
+  get:
+/organizations/{guid}/app_events/{other_id}:
+  put:
+  delete:
+/organizations/{guid}/instance_usage:
+  get:
+/service_plan_visibilities:
+  post: Creating a Service Plan Visibility
+  get: List all Service Plan Visibilities
+/service_plan_visibilities/{guid}:
+  get: Retrieve a Particular Service Plan Visibility
+  put: Updating a Service Plan Visibility
+  delete: Delete a Particular Service Plan Visibilities
+/services:
+  get: List all Services
+  post: Creating a Service (deprecated)
+/services/{guid}:
+  get: Retrieve a Particular Service
+  put:
+  delete: Delete a Particular Service
+/services/{guid}/service_plans:
+  get: List all Service Plans for the Service
+/services/{guid}/service_plans/{other_id}:
+  put:
+  delete:
+/security_groups/{guid}:
+  delete: Delete a Particular Security Group
+  put: Updating a Security Group
+  get: Retrieve a Particular Security Group
+/security_groups/{guid}/spaces/{other_id}:
+  put: Associate Space with the Security Group
+  delete: Remove Space from the Security Group
+/security_groups:
+  post: Creating a Security Group
+  get: List all Security Groups
+/security_groups/{guid}/spaces:
+  get: List all Spaces for the Security Group
+/private_domains:
+  get: List all Private Domains
+  post: Create a Private Domain owned by the given Organization
+/private_domains/{guid}:
+  get: Retrieve a Particular Private Domain
+  put:
+  delete: Delete a Particular Private Domain
+/private_domains/{guid}/shared_organizations:
+  get:
+/service_plans:
+  post: Creating a Service Plan (deprecated)
+  get: List all Service Plans
+/service_plans/{guid}/service_instances:
+  get: List all Service Instances for the Service Plan
+/service_plans/{guid}/service_instances/{other_id}:
+  put:
+  delete:
+/service_plans/{guid}:
+  delete: Delete a Particular Service Plans
+  get: Retrieve a Particular Service Plan
+  put:
+/service_keys:
+  get:
+  post:
+/service_keys/{guid}:
+  get:
+  delete:
+/service_brokers:
+  post: Create a Service Broker
+  get: List all Service Brokers
+/service_brokers/{guid}:
+  put: Update a Service Broker
+  delete: Delete a Particular Service Broker
+  get: Retrieve a Particular Service Broker
+/buildpacks/{guid}:
+  put: Enable or disable a Buildpack
+  get: Retrieve a Particular Buildpack
+  delete: Delete a Particular Buildpack
+/buildpacks:
+  post: Creates an admin Buildpack
+  get: List all Buildpacks
+/buildpacks/{guid}/bits:
+  put:
+/buildpacks/{guid}/download:
+  get:
+/blobstores/buildpack_cache:
+  delete:
+/routes:
+  post: Creating a Route
+  get: List all Routes
+/routes/{guid}/apps:
+  get: List all Apps for the Route
+/routes/{guid}:
+  get: Retrieve a Particular Route
+  put: Update a Route
+  delete: Delete a Particular Route
+/routes/{guid}/apps/{other_id}:
+  put: Associate App with the Route
+  delete: Remove App from the Route
+/routes/reserved/domain/{domain_guid}:
+  get:
+/routes/reserved/domain/{domain_guid}/host/{host}:
+  get: Check a Route exists
+/routes/{guid}/route_mappings:
+  get:
+/route_mappings:
+  get:
+  post:
+/route_mappings/{guid}:
+  get:
+  put:
+  delete:
+/service_instances:
+  post: Creating a Service Instance
+  get: List all Service Instances
+/service_instances/{guid}:
+  delete: Delete a Particular Service Instance
+  get: Retrieve a Particular Service Instance
+  put: Updating a service instance
+/service_instances/{guid}/permissions:
+  get: Retrieving permissions on a Service Instance
+/service_instances/{guid}/service_bindings:
+  get: List all Service Bindings for the Service Instance
+/service_instances/{guid}/service_bindings/{other_id}:
+  put:
+  delete:
+/service_instances/{guid}/service_keys:
+  get:
+/service_instances/{guid}/service_keys/{other_id}:
+  put:
+  delete:
+/service_instances/{guid}/routes:
+  get:
+/service_instances/{guid}/routes/{other_id}:
+  put:
+  delete:
+/managed_service_instances/{guid}:
+  get:
+/apps/{guid}/summary:
+  get: Get App summary
+/apps/{guid}/instances/{index}:
+  delete: Terminate the running App Instance at the given index
+/apps/{guid}/service_bindings/{other_id}:
+  put: Update a Service Binding for the App
+  delete: Remove Service Binding from the App
+/apps:
+  post: Creating a Docker App (experimental)
+  get: List all Apps
+/apps/{guid}/routes/{other_id}:
+  put: Associate Route with the App
+  delete: Remove Route from the App
+/apps/{guid}/download:
+  get: Downloads the bits for an App
+/apps/{guid}/droplet/download:
+  get:
+/apps/{guid}/service_bindings:
+  get: List all Service Bindings for the App
+/apps/{guid}/copy_bits:
+  post: Copy the app bits for an App
+/apps/{guid}/crashes:
+  get:
+/apps/{guid}:
+  put: Updating an App
+  delete: Delete a Particular App
+  get: Retrieve a Particular App
+/apps/{guid}/routes:
+  get: List all Routes for the App
+/apps/{guid}/env:
+  get: Get the env for an App
+/apps/{guid}/events:
+  get:
+/apps/{guid}/events/{other_id}:
+  put:
+  delete:
+/apps/{guid}/bits:
+  put: Uploads the bits for an App
+/apps/{guid}/stats:
+  get: Get detailed stats for a STARTED App
+/apps/{guid}/restage:
+  post: Restage an App
+/apps/{guid}/route_mappings:
+  get:
+/apps/{guid}/instances:
+  get: Get the instance information for a STARTED App
+/config/feature_flags:
+  get: Get all feature flags
+/config/feature_flags/{name}:
+  get: Get a particular feature flag
+  put: Update a particular feature flag
+/spaces/{guid}/managers/{other_id}:
+  put: Associate Manager with the Space
+  delete: Remove Manager from the Space
+/spaces/{guid}/domains:
+  get: List all Domains for the Space (deprecated)
+/spaces/{guid}/domains/{other_id}:
+  put:
+  delete:
+/spaces/{guid}/developers/{other_id}:
+  delete: Remove Developer from the Space
+  put: Associate Developer with the Space
+/spaces/{guid}:
+  put: Update a Space
+  get: Retrieve a Particular Space
+  delete: Delete a Particular Space
+/spaces/{guid}/security_groups:
+  get: List all Security Groups for the Space
+/spaces/{guid}/developers:
+  get: List all Developers for the Space
+  put:
+  delete:
+/spaces/{guid}/security_groups/{other_id}:
+  put: Associate Security Group with the Space
+  delete: Remove Security Group from the Space
+/spaces/{guid}/summary:
+  get: Get Space summary
+/spaces/{guid}/user_roles:
+  get:
+/spaces/{guid}/auditors:
+  get: List all Auditors for the Space
+  put:
+  delete:
+/spaces/{guid}/auditors/{other_id}:
+  put: Associate Auditor with the Space
+  delete: Remove Auditor from the Space
+/spaces/{guid}/events:
+  get: List all Events for the Space
+/spaces/{guid}/routes:
+  get: List all Routes for the Space
+/spaces:
+  get: List all Spaces
+  post: Creating a Space
+/spaces/{guid}/managers:
+  get: List all Managers for the Space
+  put:
+  delete:
+/spaces/{guid}/service_instances:
+  get: List all Service Instances for the Space
+/spaces/{guid}/services:
+  get: List all Services for the Space
+/spaces/{guid}/apps:
+  get: List all Apps for the Space
+/spaces/{guid}/app_events:
+  get:
+/users/{guid}/organizations/{other_id}:
+  put: Associate Organization with the User
+  delete: Remove Organization from the User
+/users/{guid}/audited_organizations:
+  get: List all Audited Organizations for the User
+/users/{guid}/billing_managed_organizations:
+  get: List all Billing Managed Organizations for the User
+/users/{guid}:
+  put: Updating a User
+  delete: Delete a Particular User
+  get: Retrieve a Particular User
+/users/{guid}/billing_managed_organizations/{other_id}:
+  put: Associate Billing Managed Organization with the User
+  delete: Remove Billing Managed Organization from the User
+/users/{guid}/audited_spaces/{other_id}:
+  put: Associate Audited Space with the User
+  delete: Remove Audited Space from the User
+/users/{guid}/organizations:
+  get: List all Organizations for the User
+/users/{guid}/audited_spaces:
+  get: List all Audited Spaces for the User
+/users/{guid}/managed_spaces/{other_id}:
+  put: Associate Managed Space with the User
+  delete: Remove Managed Space from the User
+/users/{guid}/managed_organizations:
+  get: List all Managed Organizations for the User
+/users/{guid}/summary:
+  get: Get User summary
+/users/{guid}/managed_organizations/{other_id}:
+  delete: Remove Managed Organization from the User
+  put: Associate Managed Organization with the User
+/users/{guid}/managed_spaces:
+  get: List all Managed Spaces for the User
+/users/{guid}/audited_organizations/{other_id}:
+  delete: Remove Audited Organization from the User
+  put: Associate Audited Organization with the User
+/users/{guid}/spaces:
+  get: List all Spaces for the User
+/users:
+  post: Creating a User
+  get: List all Users
+/users/{guid}/spaces/{other_id}:
+  put: Associate Space with the User
+  delete: Remove Space from the User
+/quota_definitions/{guid}:
+  delete: Delete a Particular Organization Quota Definition
+  get: Retrieve a Particular Organization Quota Definition
+  put: Updating a Organization Quota Definition
+/quota_definitions:
+  get: List all Organization Quota Definitions
+  post: Creating a Organization Quota Definition
+/service_bindings:
+  post: Create a Service Binding
+  get: List all Service Bindings
+/service_bindings/{guid}:
+  get: Retrieve a Particular Service Binding
+  delete: Delete a Particular Service Binding
+/user_provided_service_instances/{guid}/service_bindings:
+  get: List all Service Bindings for the User Provided Service Instance
+/user_provided_service_instances/{guid}:
+  get: Retrieve a Particular User Provided Service Instance
+  put: Updating a User Provided Service Instance
+  delete: Delete a Particular User Provided Service Instance
+/user_provided_service_instances/{guid}/routes:
+  get:
+/user_provided_service_instances/{guid}/routes/{other_id}:
+  put:
+  delete:
+/user_provided_service_instances/{guid}/service_bindings:
+  get:
+/user_provided_service_instances/{guid}/service_bindings/{other_id}:
+  put:
+  delete:
+/user_provided_service_instances:
+  get: List all User Provided Service Instances
+  post: Creating a User Provided Service Instance
+/syslog_drain_urls:
+  get:

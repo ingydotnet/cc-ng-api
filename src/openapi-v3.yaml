@@ -3,13 +3,18 @@
 # then be used to generate documentation and many other things for the
 # cloud_controller_ng.
 
+# This is the OpenAPI 'title':
 name: Cloud Controller NG v3 API
+
+# This becomes the OpenAPI 'description'. It serves as the opening page of the
+# docs and can be a full page of Markdown.
 desc: |  # Full markdown intro goes here:
   OpenAPI Specification for a Cloud Foundry Cloud Controller NG server v3 API.
-vers: 2.61.0
-base: /v3
 
-# API routes:
+# Stop words to remove from descriptions to make ids:
+stop: [a, an, the]
+
+# This section (all keys begin with '/') defines all the API route information:
 /apps:
   get: List all apps
   post: Create a new app
@@ -95,60 +100,3 @@ base: /v3
 /service_bindings/{guid}:
   get: Show a service binding
   delete: Destroy a service binding
-
-
-# The following section defines all the schema/type information for API
-# requests and responses. The format is SchemaType. See http://schematype.org
-
-+listAppsResponse:
-  xxx: +str
-+getAppResponse:
-  xxx: +str
-+getAppEnvironmentResponse:
-  xxx: +str
-+getCurrentDropletResponse:
-  xxx: +str
-+listProcessesResponse:
-  xxx: +str
-+getProcessResponse:
-  xxx: +str
-+getProcessStatisticsResponse:
-  xxx: +str
-+listProcessesForAppResponse:
-  xxx: +str
-+showProcessForAppResponse:
-  xxx: +str
-+getProcessStatisticsForAppResponse:
-  xxx: +str
-+listPackagesResponse:
-  xxx: +str
-+showPackageResponse:
-  xxx: +str
-+downloadPackageResponse:
-  xxx: +str
-+listPackagesForAppResponse:
-  xxx: +str
-+listDropletsResponse:
-  xxx: +str
-+showDropletResponse:
-  xxx: +str
-+listDropletsForAppResponse:
-  xxx: +str
-+listDropletsForPackageResponse:
-  xxx: +str
-+listRouteMappingsResponse:
-  xxx: +str
-+showRouteMappingResponse:
-  xxx: +str
-+listRouteMappingsForAppResponse:
-  xxx: +str
-+listTasksResponse:
-  xxx: +str
-+showTaskResponse:
-  xxx: +str
-+listTasksForAppResponse:
-  xxx: +str
-+showServiceBindingResponse:
-  xxx: +str
-+listServiceBindingsResponse:
-  xxx: +str

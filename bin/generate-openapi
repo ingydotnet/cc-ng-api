@@ -2,24 +2,23 @@
 
 require '../lib/prelude'
 
-X = '???'
-
 class Main
   constructor: ->
-    @input_file = process.argv[2]
-    @input = load_yaml_file @input_file
+    [@src_file, @ccng_file, @api] = process.argv[2..]
+    @src = load_yaml_file @src_file
+    @ccng = load_yaml_file @ccng_file
     @openapi =
       swagger: '2.0'
       info:
-        title: X
-        description: X
-        version: X
+        title: @src.name
+        description: @src.desc
+        version: @ccng.vers
         contact:
           name: 'Cloud Foundry Foundation'
         license:
           name: 'Apache 2.0'
           url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-      basePath: X
+      basePath: "/#{@api}"
       schemes: ['http']
       securityDefinitions:
         basicAuth:
@@ -29,26 +28,22 @@ class Main
       definitions: {}
 
   main: ->
-    @process_info()
-    for k, v of @input
+    for k, v of @src
       if k.match /^\//
         @process_path k, v
       else if k.match /^\+/
         @process_definition k, v
-    write_file '-', YAML.dump(@openapi)
-
-  process_info: ->
-    @info = @openapi.info
-    @info.title = @input.name if @input.name?
-    @info.description = @input.desc if @input.desc?
-    @info.version = @input.vers if @input.vers?
-    @openapi.basePath = @input.base if @input.base?
+    write_file '-', JSON.stringify @openapi, null, 2
 
   process_path: (path, data)->
     entry = @openapi.paths[path] = {}
-    for k, v of data
-      endpoint = entry[k] = {}
-      desc = v
+    for verb, value of data
+      if not value?
+        value = desc: 'Undefined'
+      else if typeof(value) == 'string'
+        value = desc: value
+      endpoint = entry[verb] = {}
+      desc = value.desc || @ccng[path][verb].desc || 'Undefined'
       endpoint.description = desc
       a = _.filter desc.toLowerCase().split(' '), (s)->
         not s.match /^(a|an|the|particular)$/
@@ -57,45 +52,39 @@ class Main
       endpoint.operationId = _.lowerFirst a.join ''
 
   process_definition: (id, data)->
-    id = id[1..]
-    @openapi.definitions[id] =
-      properties: {}
-    props = @openapi.definitions[id].properties
-    for k, v of data
-      if m = v.match /^\+str(?: --(.+))?$/
-        props[k] = type: 'string'
-      else if m = v.match /^\+int(?: --(.+))?$/
-        props[k] = type: 'integer'
-      else if m = v.match /^\+num(?: --(.+))?$/
-        props[k] = type: 'number'
-      else if m = v.match /^\+bool(?: --(.+))?$/
-        props[k] = type: 'boolean'
-      else if m = v.match /^\+(\w+)(?: --(.+))?$/
-        props[k] =
-          '$ref': "#/definitions/#{m[1]}"
-        m = [null, m[2]]
-      else if m = v.match /^\+(\w+)\[\](?: --(.+))?$/
-        props[k] =
-          type: 'array'
-          items:
-            '$ref': "#/definitions/#{m[1]}"
-        m = [null, m[2]]
-      else if k == '...'
-        @openapi.definitions[id] =
-          type: 'object'
-          additionalProperties:
-            type: 'string'
-        m = [null, null]
-      else
-        warn "??? '#{v}'"
-        continue
-      if m[1]?
-        props[k].description = m[1]
-
-class Walker
-  constructor: ({@node, @callback})->
-
-  walk: (node, callback, path='/')->
-    XXX @
+#     id = id[1..]
+#     @openapi.definitions[id] =
+#       properties: {}
+#     props = @openapi.definitions[id].properties
+#     for k, v of data
+#       if m = v.match /^\+str(?: --(.+))?$/
+#         props[k] = type: 'string'
+#       else if m = v.match /^\+int(?: --(.+))?$/
+#         props[k] = type: 'integer'
+#       else if m = v.match /^\+num(?: --(.+))?$/
+#         props[k] = type: 'number'
+#       else if m = v.match /^\+bool(?: --(.+))?$/
+#         props[k] = type: 'boolean'
+#       else if m = v.match /^\+(\w+)(?: --(.+))?$/
+#         props[k] =
+#           '$ref': "#/definitions/#{m[1]}"
+#         m = [null, m[2]]
+#       else if m = v.match /^\+(\w+)\[\](?: --(.+))?$/
+#         props[k] =
+#           type: 'array'
+#           items:
+#             '$ref': "#/definitions/#{m[1]}"
+#         m = [null, m[2]]
+#       else if k == '...'
+#         @openapi.definitions[id] =
+#           type: 'object'
+#           additionalProperties:
+#             type: 'string'
+#         m = [null, null]
+#       else
+#         warn "??? '#{v}'"
+#         continue
+#       if m[1]?
+#         props[k].description = m[1]
 
 (new Main).main()

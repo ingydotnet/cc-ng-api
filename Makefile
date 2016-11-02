@@ -38,11 +38,11 @@ run: build
 	@echo 'Try: curl http://localhost:8080/v2/openapi'
 	@echo 'Try: curl http://localhost:8080/v3/openapi'
 	@echo
-	go run src/$(NAME).go
+	go run src/docker/$(NAME).go
 
 doc: build
-	swagger-codegen generate -i v2/openapi.yaml -l html2 -o doc/v2/
-	swagger-codegen generate -i v3/openapi.yaml -l html2 -o doc/v3/
+	swagger-codegen generate -i v2/openapi.json -l html2 -o doc/v2/
+	swagger-codegen generate -i v3/openapi.json -l html2 -o doc/v3/
 
 hcf: check-hcf openapi_controller.rb
 	docker cp openapi_controller.rb \
@@ -63,7 +63,9 @@ docker-push:
 	docker push $(DOCKER_NAME)
 
 clean:
-	rm -fr data doc openapi_controller.rb test/{data,test-more-bash} v2 v3
+	rm -fr cloud_controller_ng \
+	    data doc openapi_controller.rb \
+	    test/{data,test-more-bash} v2 v3
 
 #------------------------------------------------------------------------------
 check-hcf:
@@ -77,21 +79,32 @@ check-ccng:
 	    { echo "'$$CCNG_REPO' not a cloud_controller_ng repo"; exit 1; }
 
 openapi_controller.rb: v2/openapi.json v3/openapi.json
-	cat src/openapi_controller.1 \
+	cat src/template/openapi_controller.1 \
 	    v2/openapi.json \
-	    src/openapi_controller.2 \
+	    src/template/openapi_controller.2 \
 	    v3/openapi.json \
-	    src/openapi_controller.3 \
+	    src/template/openapi_controller.3 \
 	    > $@
 
-v2/openapi.json: v2/openapi.yaml
-	jyj $< > $@
+%/openapi.json: src/openapi-%.yaml data/ccng-%.yaml %
+	./bin/generate-openapi $^ > $@
 
-v3/openapi.json: v3/openapi.yaml
-	jyj $< > $@
+data/ccng-v2.yaml data/ccng-v3.yaml: data/ccng.yaml
+	rm -f data/ccng-errors.yaml
+	./bin/format-ccng-data $<
+	@if [[ -e data/ccng-errors.yaml ]]; then \
+	    cat data/ccng-errors.yaml; \
+	    echo; \
+	    echo 'Errors found. Saved in data/ccng-errors.yaml. See above.'; \
+	    exit 1; \
+	fi
 
-%/openapi.yaml: src/cc-ng-openapi-%.yaml %
-	./bin/generate-openapi $< > $@
+data/ccng.yaml: cloud_controller_ng/vendor/bundle
+	mkdir -p data
+	./bin/extract-ccng-data > $@
+
+cloud_controller_ng/vendor/bundle:
+	./bin/get-cloud_controller_ng-local
 
 test/data:
 	mkdir $@
@@ -100,5 +113,5 @@ test/data:
 test/test-more-bash:
 	git clone https://github.com/ingydotnet/test-more-bash $@
 
-v2 v3:
+v2 v3 data:
 	mkdir -p $@

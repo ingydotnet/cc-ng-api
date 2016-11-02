@@ -16,5 +16,5 @@ route-registrar \
 
 sleep 1
 
-go run src/cc-ng-openapi-server.go \
+go run cc-ng-openapi-server.go \
 	&> /var/log/cc-ng-openapi-server.log

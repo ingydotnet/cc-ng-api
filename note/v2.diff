@@ -1,0 +1,11 @@
+--- v2-ccng.paths	2016-11-02 10:23:19.000000000 -0700
++++ v2-src.paths	2016-11-02 10:23:19.000000000 -0700
+@@ -23,7 +23,7 @@
+ /apps/{guid}/instances - get
+ /apps/{guid}/instances/{index} - delete
+ /apps/{guid}/instances/{instance_id}/files - get
+-/apps/{guid}/instances/{instance_id}/files/* - get
++/apps/{guid}/instances/{instance_id}/files/{file_path} - get
+ /apps/{guid}/restage - post
+ /apps/{guid}/route_mappings - get
+ /apps/{guid}/routes - get

@@ -1,0 +1,68 @@
+#!/usr/bin/env coffee
+
+require '../lib/prelude'
+
+X = '???'
+
+class Main
+  constructor: ->
+    @raw = load_yaml_file process.argv[2]
+    @v2 = @default_data 'v2'
+    @v3 = @default_data 'v3'
+    @errors = null
+
+  main: ->
+    @process 'v2'
+    @process 'v3'
+    if @errors?
+      write_file "data/ccng-errors.yaml", YAML.dump @errors
+    else
+      write_file "data/ccng-v2.yaml", YAML.dump @v2
+      write_file "data/ccng-v3.yaml", YAML.dump @v3
+
+  process: (@api)->
+    data = @[@api]
+    for elem in @raw
+      type = elem[0]
+      if type == 'route'
+        [api, verb, path, clas, meth] = elem[1..]
+        continue if api != @api
+        if api == 'v2'
+          continue unless path.match /^\/v2\//
+          path = path.replace /^\/v2/, ''
+          # Hack for one off weirdness:
+          path = path.replace /\*/, '{file_path}'
+        path = path.replace /:(\w+)/g, "{$1}"
+        # warn "route #{@api} #{verb} #{path}"
+        if not data[path]?[verb]?
+          @error_new path, verb
+          continue
+        # warn "ok #{@api} #{verb} #{path}"
+        data[path][verb].clas = clas if clas?
+        data[path][verb].meth = meth if meth?
+      else if type == 'api_version'
+        data.vers = elem[1]
+      else
+        XXX type, elem
+
+  default_data: (api)->
+    src = load_yaml_file "src/openapi-#{api}.yaml"
+    data =
+      vers: X
+    for path, entry of src
+      if path.match /^\//
+        data[path] = {}
+        for verb of entry
+          data[path][verb] =
+            desc: null
+            clas: null
+            meth: null
+    data
+
+  error_new: (path, verb, api)->
+    @errors ||= {}
+    @errors[path] ||= {}
+    @errors[path][verb] =
+      error: "This path not defined in 'src/openapi-#{@api}.yaml'"
+
+(new Main).main()
